@@ -1,0 +1,42 @@
+---
+config:
+  theme: mc
+---
+classDiagram
+    class Library {
+        -books: List~Book~
+        -users: List~User~
+        -loans: List~Loan~
+        +add_book(book: Book)
+        +register_user(user: User)
+        +create_loan(user: User, book: Book)
+    }
+    
+    class Book {
+        -title: String
+        -author: String
+        -state: Boolean
+        +mark_as_unavailable()
+        +mark_as_available()
+    }
+    
+    class User {
+        -name: String
+        -email: String
+    }
+    
+    class Loan {
+        -start_date: Date
+        -end_date: Date
+        -book: Book
+        -user: User
+        +close_loan()
+    }
+    
+    Library "1" --> "*" Book : manages
+    Library "1" --> "*" User : manages
+    Library "1" --> "*" Loan : manages
+    Loan "*" --> "1" Book : references
+    Loan "*" --> "1" User : references
+    User "1" --> "*" Loan : has
+    Book "1" --> "*" Loan : has
